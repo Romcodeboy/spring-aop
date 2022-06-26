@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置AOP 的异常类 -->
+    <bean id="myarround" class="cn.edu.ccut.advice.MyArround"></bean>
+
+    <!-- 配置切面（切点、） -->
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="myPoint" expression="execution(* cn.edu.ccut.exception2.impl.ISExceptionImpl2.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="myarround" pointcut-ref="myPoint"></aop:advisor>
+    </aop:config>
+
+    <!-- 实现方法 -->
+    <bean id="isMyException" class="cn.edu.ccut.exception2.impl.ISExceptionImpl2"></bean>
+</beans>

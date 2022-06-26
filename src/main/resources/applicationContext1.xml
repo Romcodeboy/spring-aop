@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置AOP 的异常类 -->
+    <bean id="mythrow" class="cn.edu.ccut.advice.MyThrowAdvice"></bean>
+
+    <!-- 配置切面（切点、） -->
+    <aop:config proxy-target-class="true">
+        <aop:aspect ref="mythrow">
+            <aop:pointcut id="myPoint" expression="execution(* cn.edu.ccut.exception.impl.ISExceptionImpl.*(..))"></aop:pointcut>
+            <aop:after-throwing method="myException" pointcut-ref="myPoint" throwing="e1"></aop:after-throwing>
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 实现方法 -->
+    <bean id="isMyException" class="cn.edu.ccut.exception.impl.ISExceptionImpl"></bean>
+</beans>
